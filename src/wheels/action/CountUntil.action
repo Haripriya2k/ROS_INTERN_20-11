@@ -1,0 +1,27 @@
+# Goal: current object pose (px,py,pz, rpy) and action transform (tx,ty,tz, rpy) + frame flag
+float64 px
+float64 py
+float64 pz
+float64 roll
+float64 pitch
+float64 yaw
+float64 tx
+float64 ty
+float64 tz
+float64 a_roll
+float64 a_pitch
+float64 a_yaw
+bool action_in_world
+int32 steps 
+---
+# Result: new pose after applying transform
+float64 new_x
+float64 new_y
+float64 new_z
+float64 new_roll
+float64 new_pitch
+float64 new_yaw
+---
+# Feedback: an intermediate homogeneous point (translation) + progress 0..1
+geometry_msgs/Point homogeneous_point
+float64 progress

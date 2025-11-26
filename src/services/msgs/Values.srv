@@ -1,0 +1,28 @@
+# Request: current pose of the point (object)
+float64 px
+float64 py
+float64 pz
+
+float64 roll   # radians
+float64 pitch  # radians
+float64 yaw    # radians
+
+# Action: translation + rotation to apply
+float64 tx
+float64 ty
+float64 tz
+
+float64 a_roll   # radians (action roll)
+float64 a_pitch  # radians
+float64 a_yaw    # radians
+
+bool action_in_world  # true => action is expressed in world frame; false => in object's local frame
+---
+# Response: new pose after applying transform
+float64 new_x
+float64 new_y
+float64 new_z
+
+float64 new_roll
+float64 new_pitch
+float64 new_yaw
