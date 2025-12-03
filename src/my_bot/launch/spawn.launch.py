@@ -13,7 +13,7 @@ def generate_launch_description():
     doc = xacro.process_file(xacro_file)
     robot_desc = doc.toxml()
 
-    # 2. Robot State Publisher
+    # 2. Robot State Publisher (RSP)
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -30,8 +30,20 @@ def generate_launch_description():
                    '-z', '1.0'], # Spawn height
         output='screen'
     )
+        
+    # RViz
+    rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='screen',
+        parameters=[{'use_sim_time': True}],
+        arguments=['-d', os.path.join(pkg_share, 'rviz', 'one.rviz')]
+    )
+
 
     return LaunchDescription([
         node_robot_state_publisher,
-        spawn_entity
+        spawn_entity,
+        rviz_node
     ])

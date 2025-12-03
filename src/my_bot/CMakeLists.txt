@@ -35,7 +35,14 @@ install(DIRECTORY
   worlds 
   meshes 
   models
+  config
   DESTINATION share/${PROJECT_NAME}
+)
+install(
+  FILES
+    rviz/one.rviz
+  DESTINATION 
+    share/${PROJECT_NAME}/rviz
 )
 
 ament_package()

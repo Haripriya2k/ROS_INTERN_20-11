@@ -1,0 +1,55 @@
+slam_toolbox:
+  ros__parameters:
+    # --- Frame and Topic Configuration ---
+    odom_frame: odom                    # Matches the output of the Diff Drive Plugin 
+    map_frame: map                      # The frame SLAM publishes the resulting map in 
+    base_frame: base_link               # The robot's main body frame
+    
+    use_sim_time: true                  # CRITICAL: Ensures synchronization with Gazebo's clock
+    
+    scan_topic: /scan                   # Matches the Gazebo Lidar sensor bridge output
+    scan_queue_size: 10
+    
+    # --- Algorithm Mode (Synchronous) ---
+    mode: 'mapping'                     # Set to 'mapping' to build a new map
+    method: 'online_sync'               # CRITICAL CHANGE: Use synchronous mode 
+
+    # --- Timing and Performance (Adjusted for Sync Mode) ---
+    # Publish map->odom TF less frequently than in async mode, 
+    # as synchronous updates take longer.
+    transform_publish_period: 0.05      # Publish map->odom at 20 Hz (was 0.02) 
+    map_update_interval: 5.0            # Frequency of map topic publication (seconds)
+    
+    # Time buffer must be generous in sync mode
+    transform_timeout: 0.5              # Increased timeout for TF (was 0.3)
+    tf_buffer_duration: 30.0
+
+    # --- Mapping Parameters ---
+    resolution: 0.05                    # Map resolution in meters/pixel
+    
+    # --- Movement Thresholds (Kept from Async) ---
+    minimum_travel_distance: 0.2        # Minimum linear distance traveled before processing a new scan
+    minimum_travel_heading: 0.2         # Minimum angular change before processing a new scan
+    minimum_time_interval: 0.0
+
+    # --- Loop Closure ---
+    do_loop_closing: true               # Enables global optimization
+    
+    # --- Laser range limits (Kept from Async) ---
+    min_laser_range: 0.12
+    max_laser_range: 4.0
+
+    # --- Other advanced tuning parameters (Keep these consistent unless debugging) ---
+    scan_buffer_size: 10
+    scan_buffer_maximum_scan_distance: 10.0
+    link_match_minimum_response_fine: 0.1
+    link_scan_maximum_distance: 1.5
+    loop_search_maximum_distance: 3.0
+    # [Other detailed correlation and penalty parameters omitted for brevity, but they should match your async file]
+    distance_variance_penalty: 0.5
+    angle_variance_penalty: 1.0
+    
+    # --- Map storage & interactive tools ---
+    use_map_saver: true
+    enable_interactive_mode: true
+    occupancy_threshold: 0.1
